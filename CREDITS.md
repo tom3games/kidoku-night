@@ -1,0 +1,25 @@
+- snd/buzz1.mp3: File:Mobile_phone_interference.ogg (切り出し) / Ezwa / Public domain
+- snd/buzz2.mp3: File:Mobile_phone_interference.ogg (切り出し) / Ezwa / Public domain
+- snd/buzz3.mp3: File:Mobile_phone_interference.ogg (切り出し) / Ezwa / Public domain
+- snd/ringback.mp3: File:JA_Ringback_tone_by_au.ogg (先頭7秒) / KDDI Corporation / Public domain
+- snd/reply.mp3: File:Segnale_audio_di_arrivo_SMS.ogg (先頭) / Pracchia-78 / Public domain
+- snd/birds.mp3: File:Réveil_des_oiseaux.ogg (5-23秒) / Joseph Sardin / CC0
+- snd/notif1.mp3: File:Notification_Gravity_Sound.wav / Gravity Sound / CC BY 4.0
+- snd/notif2.mp3: File:Notification_2_Gravity_Sound.wav / Gravity Sound / CC BY 4.0
+- snd/notif3.mp3: File:Notification_4_Gravity_Sound.wav / Gravity Sound / CC BY 4.0
+- snd/fridge.mp3: File:Inside of refrigerator.ogg / stephan / Public domain
+- snd/clock.mp3: File:Clock ticking.ogg / natalie / Public domain
+- snd/tap1.mp3: Interface Sounds / Kenney / CC0
+- snd/tap2.mp3: Interface Sounds / Kenney / CC0
+- snd/tap3.mp3: Interface Sounds / Kenney / CC0
+- snd/type1.mp3: Interface Sounds / Kenney / CC0
+- snd/type2.mp3: Interface Sounds / Kenney / CC0
+- snd/send.mp3: Interface Sounds / Kenney / CC0
+- snd/swish1.mp3: Swishes Sound Pack / artisticdude / CC0
+- snd/swish2.mp3: Swishes Sound Pack / artisticdude / CC0
+- snd/swish3.mp3: Swishes Sound Pack / artisticdude / CC0
+- snd/fail1.mp3: 85 Short music jingles / Kenney / CC0
+- snd/fail2.mp3: 85 Short music jingles / Kenney / CC0
+- snd/morning.mp3: 85 Short music jingles / Kenney / CC0
+- snd/result.mp3: 85 Short music jingles / Kenney / CC0
+- snd/bgm.mp3: Japanese Lofi HipHop Track / pickentcode / CC0

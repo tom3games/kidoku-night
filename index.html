@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>既読無視の夜 | 返信を待つ間に親指を止めるバカゲー</title>
+<meta name="description" content="午前2時、彼の既読のまま返事が来ない。昔の写真にいいね、長文メッセージ、電話、意味深なストーリー。勝手に動く親指を朝まで止めるバカゲー。最後に今夜の私の記録が出る。">
+<meta name="theme-color" content="#121628">
+<meta property="og:type" content="website">
+<meta property="og:title" content="既読無視の夜">
+<meta property="og:description" content="返信を待つ午前2時。親指が勝手に2016年の写真にいいねしかける。朝まで止めるバカゲー。">
+<meta property="og:image" content="https://tom3games.github.io/kidoku-night/og.png?v=1">
+<meta property="og:url" content="https://tom3games.github.io/kidoku-night/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="既読無視の夜">
+<meta name="twitter:description" content="返信を待つ午前2時。親指が勝手に2016年の写真にいいねしかける。朝まで止めるバカゲー。">
+<meta name="twitter:image" content="https://tom3games.github.io/kidoku-night/og.png?v=1">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='14' y='4' width='36' height='56' rx='8' fill='%23121628'/%3E%3Crect x='18' y='10' width='28' height='44' rx='3' fill='%23f2795b'/%3E%3Ccircle cx='40' cy='18' r='9' fill='%23f6e7c1'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yusei+Magic&family=M+PLUS+Rounded+1c:wght@500;800&display=swap" rel="stylesheet">
+<style>
+[hidden]{display:none!important}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --night:#121628;--night2:#1c2240;--moon:#f6e7c1;--coral:#f2795b;--coral-dk:#c4533a;--mustard:#e0b14a;
+  --chat:#1b2032;--bub:#2b3150;--ink:#f3eee4;--sub:#9aa1b8;--paper:#fbf6ea;--paper-ink:#2a2622;
+  --hand:"Yusei Magic","Hiragino Maru Gothic ProN",sans-serif;
+  --ui:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif;
+  --round:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN",sans-serif;
+  --skin:#f0c3a0;--skin-dk:#d99a76;
+}
+html{background:var(--night);touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:var(--ui);color:var(--ink);background:var(--night);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;overflow:hidden;height:100svh}
+button,a,canvas{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.view{position:fixed;inset:0;height:100svh;overflow:hidden}
+#boot-err{position:fixed;inset:auto 8px 8px 8px;z-index:99;background:#fff;color:#b00;font:12px/1.4 monospace;white-space:pre-wrap;padding:10px;border-radius:8px}
+
+/* 部屋（夜の寝室・切り絵） */
+.room{position:absolute;inset:0;background:radial-gradient(70% 45% at 50% 62%,#2a3156 0,#161b33 60%,#0d1022 100%)}
+.room svg.win{position:absolute;left:50%;top:-2%;width:min(120vw,560px);transform:translateX(-50%);opacity:.95}
+.room .glow{position:absolute;left:50%;top:58%;width:150vw;height:90svh;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(255,170,140,.22),rgba(255,170,140,0));pointer-events:none}
+.paper::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ロード: 伏せたスマホが震える */
+#vLoad{background:var(--night);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;z-index:50}
+#vLoad svg{width:150px;height:110px}
+#ldPhone{transform-box:fill-box;transform-origin:center;animation:ldbuzz 1.8s infinite}
+@keyframes ldbuzz{0%,8%,16%,24%{transform:translateX(0)}4%,12%,20%{transform:translateX(-3px) rotate(-1deg)}6%,14%,22%{transform:translateX(3px) rotate(1deg)}}
+#ldWaves path{animation:ldw 1.8s infinite;opacity:0}
+@keyframes ldw{0%,26%{opacity:0}4%,22%{opacity:.8}}
+#loadTxt{font-family:var(--hand);font-size:17px;color:var(--moon);letter-spacing:.06em}
+#loadBar{width:150px;height:3px;background:#2c3355;overflow:hidden;border-radius:2px}
+#loadBar i{display:block;height:100%;width:0;background:var(--coral);transition:width .2s}
+
+/* タイトル */
+#vTitle{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 16px max(22px,env(safe-area-inset-bottom))}
+.tPhone{position:absolute;left:50%;top:31%;width:min(46vw,190px,23svh);transform:translate(-50%,-50%) rotate(-7deg);filter:drop-shadow(0 18px 24px rgba(0,0,0,.5))}
+.tPhone svg{display:block;width:100%;height:auto}
+.tBox{position:relative;text-align:center;margin-bottom:3svh}
+.tBox h1{font-family:var(--hand);font-weight:400;font-size:clamp(44px,14vw,64px);line-height:1.05;color:var(--moon);letter-spacing:.04em;text-shadow:0 3px 0 #0b0e1d,0 0 24px rgba(246,231,193,.25)}
+.tBox h1 small{display:block;font-size:.38em;letter-spacing:.3em;color:var(--coral);margin-bottom:6px}
+.tBox p{margin-top:12px;font-family:var(--round);font-weight:500;font-size:15px;color:#d7d2c8;line-height:1.6}
+#bStart{position:relative;min-width:230px;height:60px;padding:0 30px;border-radius:30px;background:var(--coral);color:#fff;font-family:var(--round);font-weight:800;font-size:20px;letter-spacing:.1em;box-shadow:0 5px 0 var(--coral-dk),0 10px 24px rgba(242,121,91,.35)}
+#bStart:active{transform:translateY(3px);box-shadow:0 2px 0 var(--coral-dk)}
+.tSmall{position:relative;display:flex;gap:8px;margin-top:14px}
+.tSmall button{min-height:44px;padding:0 16px;font-size:15px;font-family:var(--round);font-weight:500;color:#d7d2c8;border-bottom:1px solid rgba(215,210,200,.35)}
+.tFoot{position:relative;margin-top:10px;font-size:11px;color:#7d84a0}
+.tFoot a{color:#9aa1b8;display:inline-flex;align-items:center;min-height:32px;padding:0 6px}
+
+/* 遊び方: 付箋の紙 */
+#vHow{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:max(14px,env(safe-area-inset-top)) 16px max(14px,env(safe-area-inset-bottom))}
+.note{position:relative;width:min(92vw,370px);background:var(--paper);color:var(--paper-ink);padding:18px 18px 14px;transform:rotate(-1.2deg);box-shadow:0 14px 30px -12px rgba(0,0,0,.6)}
+.note::before{content:"";position:absolute;top:-11px;left:50%;width:84px;height:22px;margin-left:-42px;background:rgba(242,121,91,.55);transform:rotate(2deg)}
+.note h2{font-family:var(--hand);font-weight:400;font-size:24px;text-align:center;margin-bottom:6px}
+.note ol{list-style:none}
+.note li{display:grid;grid-template-columns:58px 1fr;gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed #cdbfa6}
+.note li:last-child{border-bottom:0}
+.note li svg{width:58px;height:58px}
+.note li b{display:block;font-family:var(--round);font-weight:800;font-size:16px;line-height:1.35}
+.note li span{display:block;font-size:13px;color:#6d6458;line-height:1.45;margin-top:2px}
+.howBtns{position:relative;display:flex;gap:12px;margin-top:18px;align-items:center}
+#bHowGo{min-width:170px;height:52px;border-radius:26px;background:var(--coral);color:#fff;font-family:var(--round);font-weight:800;font-size:18px;letter-spacing:.08em}
+#bHowBack{min-height:44px;padding:0 14px;font-size:15px;color:#d7d2c8}
+.credit{position:relative;margin-top:12px;font-size:11px;color:#7d84a0;text-align:center;line-height:1.5}
+
+/* 遊ぶ画面 */
+#vPlay{--top:max(46px,calc(env(safe-area-inset-top) + 40px));--bot:max(54px,calc(env(safe-area-inset-bottom) + 46px))}
+#handsBack,#thumbs{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+#thumbs{z-index:5}
+#phone{position:absolute;left:50%;top:var(--top);bottom:var(--bot);width:min(92vw,400px);transform:translateX(-50%);background:#0b0c10;border-radius:36px;padding:9px;box-shadow:0 0 0 2px #2a2d36,0 22px 40px rgba(0,0,0,.6),0 0 60px rgba(242,121,91,.12);z-index:3}
+#phone.buzz{animation:buzz .32s linear}
+@keyframes buzz{0%,100%{transform:translateX(-50%)}20%{transform:translateX(calc(-50% - 3px)) rotate(-.6deg)}40%{transform:translateX(calc(-50% + 3px)) rotate(.6deg)}60%{transform:translateX(calc(-50% - 2px))}80%{transform:translateX(calc(-50% + 2px))}}
+#screen{position:relative;width:100%;height:100%;border-radius:28px;overflow:hidden;background:var(--chat);display:flex;flex-direction:column}
+/* ステータスバー: 時刻と電池（点数の表示はここだけ） */
+#sbar{flex:none;height:30px;display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 24px;font-size:14px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
+#sbar .r{display:flex;align-items:center;gap:6px;font-size:12.5px}
+#bat{position:relative;width:24px;height:12px;border:1.5px solid #fff;border-radius:3px;padding:1px}
+#bat::after{content:"";position:absolute;right:-4px;top:3px;width:2px;height:4px;background:#fff;border-radius:0 1px 1px 0}
+#bat i{display:block;height:100%;background:#fff;border-radius:1px;width:20%}
+#bat.low i{background:#ff5b4d}
+/* ヘッダー */
+#hdr{flex:none;height:58px;display:flex;align-items:center;gap:6px;padding:0 8px 0 4px;border-bottom:1px solid #262c44;position:relative;z-index:2;background:var(--chat)}
+#hdr .back{width:22px;height:22px;flex:none;margin-left:4px}
+.tg{position:relative;width:52px;height:52px;flex:none;display:grid;place-items:center;border-radius:50%}
+.tg .ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);pointer-events:none;overflow:visible}
+.tg .ring circle{fill:none;stroke:var(--coral);stroke-width:4;stroke-dasharray:151;stroke-dashoffset:151;opacity:0;transition:opacity .15s}
+.tg.on .ring circle{opacity:1}
+.tg.on{animation:itch .5s ease-in-out infinite}
+.tg.tell{animation:itch .22s ease-in-out infinite}
+@keyframes itch{0%,100%{transform:none}50%{transform:scale(1.08)}}
+.tg.on::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(closest-side,rgba(242,121,91,.45),rgba(242,121,91,0));pointer-events:none}
+#tAvatar svg.av{width:40px;height:40px;border-radius:50%}
+#hdr .who{flex:1;min-width:0;line-height:1.2}
+#hdr .who b{display:block;font-size:16px}
+#hdr .who small{font-size:11px;color:var(--sub)}
+#tSearch svg,#tCall svg{width:26px;height:26px}
+/* 年さかのぼり・検索の小窓（衝動の進み具合を絵で見せる） */
+#pvYear{position:absolute;left:60px;top:66px;pointer-events:none;background:var(--mustard);color:#2b1d05;font-weight:800;font-size:15px;padding:4px 10px;border-radius:8px 8px 8px 2px;z-index:3;font-variant-numeric:tabular-nums;box-shadow:0 3px 8px rgba(0,0,0,.35)}
+#pvSearch{position:absolute;right:10px;top:94px;pointer-events:none;width:62%;height:38px;background:#2b3150;border-radius:10px;display:flex;align-items:center;padding:0 12px;font-size:15px;z-index:3;box-shadow:0 3px 8px rgba(0,0,0,.35)}
+#pvSearch::before{content:"検索";font-size:11px;color:var(--sub);margin-right:8px}
+#pvStory{position:absolute;left:10px;bottom:70px;pointer-events:none;width:78px;height:96px;background:#fff;padding:5px 5px 18px;transform-origin:left bottom;z-index:3;box-shadow:0 4px 10px rgba(0,0,0,.45)}
+#pvStory i{display:block;width:100%;height:100%;background:radial-gradient(circle at 62% 38%,var(--moon) 0 13px,transparent 14px),#1b2547}
+/* トーク */
+#chat{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;padding:10px 12px;overflow:hidden;position:relative}
+.day{align-self:center;font-size:11px;color:var(--sub);background:#262c44;padding:2px 10px;border-radius:9px}
+.msg{max-width:78%;padding:8px 12px;font-size:14.5px;line-height:1.45;border-radius:16px;word-break:break-all}
+.msg.them{align-self:flex-start;background:var(--bub);border-bottom-left-radius:4px}
+.msg.me{align-self:flex-end;background:var(--coral);color:#fff;border-bottom-right-radius:4px}
+.meta{align-self:flex-end;font-size:10.5px;color:var(--sub);margin-top:-6px}
+.sys{align-self:center;font-size:12px;color:#ffd2c4;background:rgba(242,121,91,.18);padding:4px 12px;border-radius:10px;text-align:center}
+.msg.long{max-height:110px;overflow:hidden;position:relative}
+.msg.long::after{content:"…続きを読む";position:absolute;right:8px;bottom:4px;font-size:11px;background:var(--coral);padding-left:6px}
+/* 下の入力欄 */
+#bar{flex:none;height:64px;display:flex;align-items:center;gap:6px;padding:0 10px 4px 6px;border-top:1px solid #262c44;position:relative;background:var(--chat)}
+#tCam svg{width:28px;height:28px}
+#tInput{position:relative;flex:1;height:44px;border-radius:22px;background:#2b3150;display:flex;align-items:center;padding:0 14px;font-size:14px;color:#fff;overflow:hidden;white-space:nowrap}
+#tInput .ph{color:#6f7796}
+#tInput .bar{position:absolute;left:0;bottom:0;height:4px;width:0;background:var(--coral)}
+#tInput.on{box-shadow:0 0 0 2px var(--coral),0 0 16px rgba(242,121,91,.5)}
+#tInput.tell{animation:itch .22s ease-in-out infinite}
+#tInput .txt{display:block;direction:rtl;text-align:left;overflow:hidden;text-overflow:clip;width:100%}
+#send{width:36px;height:36px;flex:none;display:grid;place-items:center;opacity:.5}
+#send svg{width:24px;height:24px}
+#tInput.on ~ #send{opacity:1}
+/* 心の声（同時に1つだけ） */
+#think{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-2deg);background:var(--paper);color:var(--paper-ink);font-family:var(--hand);font-size:19px;padding:10px 16px;border-radius:22px;white-space:nowrap;z-index:6;pointer-events:none;box-shadow:0 6px 16px rgba(0,0,0,.4);opacity:0;transition:opacity .15s}
+#think.show{opacity:1}
+#think::after{content:"";position:absolute;left:24px;bottom:-12px;width:14px;height:14px;border-radius:50%;background:var(--paper)}
+#think.stamp{background:transparent;box-shadow:none;color:var(--coral);font-size:30px;-webkit-text-stroke:1px #fff;text-shadow:0 2px 0 #fff,0 4px 10px rgba(0,0,0,.45);transform:translate(-50%,-50%) rotate(-8deg) scale(1.05)}
+#think.stamp::after{display:none}
+#think.close{font-size:36px;color:#ff5b4d}
+/* 通知 */
+#banner{position:absolute;left:8px;right:8px;top:96px;z-index:7;display:flex;gap:10px;align-items:center;min-height:62px;padding:9px 12px;background:rgba(244,240,232,.96);color:#1d1d22;border-radius:16px;box-shadow:0 10px 24px rgba(0,0,0,.45);transform:translateY(-140%);opacity:0;pointer-events:none;transition:transform .28s ease-out,opacity .2s}
+#banner.show{transform:none;opacity:1;pointer-events:auto}
+#banner.opened{background:#fff;outline:3px solid var(--mustard)}
+#banner .ic{width:38px;height:38px;flex:none;border-radius:10px;overflow:hidden}
+#banner .ic svg{width:100%;height:100%;display:block}
+#banner .bt{min-width:0;flex:1}
+#banner .bt b{display:block;font-size:13px}
+#banner .bt span{display:block;font-size:14px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#banner .ago{font-size:11px;color:#7a7a84;align-self:flex-start}
+/* やらかした画面（スマホの中で開いてしまったアプリ） */
+#oops{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;background:#0f1220;opacity:0;pointer-events:none;transition:opacity .15s}
+#oops.show{opacity:1}
+#oops .what{position:absolute;left:0;right:0;bottom:12%;text-align:center;font-family:var(--round);font-weight:800;font-size:21px;line-height:1.35;color:#fff;padding:0 14px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+#oops .what small{display:block;font-size:14px;font-weight:500;color:#ffd2c4;margin-top:4px}
+.ap-hdr{height:54px;display:flex;align-items:center;padding:0 14px;font-weight:800;font-size:17px;gap:8px;border-bottom:1px solid rgba(255,255,255,.08)}
+.photo{margin:10px 12px 0;border-radius:6px;overflow:hidden;background:#fff;padding:8px 8px 10px;color:#222;transform:rotate(-1deg)}
+.photo svg{display:block;width:100%;height:auto}
+.photo .cap{font-size:12px;margin-top:6px;color:#555}
+#heart{position:absolute;left:50%;top:36%;width:42%;transform:translate(-50%,-50%) scale(0);transition:transform .35s cubic-bezier(.2,1.5,.4,1)}
+#oops.show #heart{transform:translate(-50%,-50%) scale(1)}
+.callScr{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:linear-gradient(#232a4a,#0f1220)}
+.callScr svg.av{width:120px;height:120px;border-radius:50%}
+.callScr b{font-size:24px}
+.callScr span{font-size:15px;color:#c8cbe0}
+.callScr .end{margin-top:30px;width:66px;height:66px;border-radius:50%;background:#e2483d;display:grid;place-items:center}
+.storyScr{flex:1;position:relative;background:radial-gradient(circle at 64% 32%,var(--moon) 0 16%,rgba(246,231,193,.15) 17%,transparent 40%),linear-gradient(#1b2547,#0b1024)}
+.storyScr .sc{position:absolute;left:8%;right:8%;top:58%;text-align:center;font-family:var(--hand);font-size:26px;color:#fff;background:rgba(0,0,0,.35);padding:6px 10px;border-radius:8px}
+.storyScr .bars{position:absolute;left:10px;right:10px;top:10px;height:3px;background:rgba(255,255,255,.35);border-radius:2px}
+.storyScr .bars i{display:block;height:100%;width:100%;background:#fff}
+.prof{flex:1;display:flex;flex-direction:column;align-items:center;padding-top:30px;gap:10px;background:#141829}
+.prof svg.av{width:100px;height:100px;border-radius:50%}
+.prof b{font-size:20px}
+.prof .fb{margin-top:6px;padding:9px 28px;border-radius:8px;background:#3a4166;font-weight:700;font-size:15px}
+.longScr{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;gap:6px;background:var(--chat)}
+.longScr .msg{max-width:88%;font-size:13px}
+/* 夜の始まり・終わりの一言 */
+#cue{position:absolute;inset:0;z-index:9;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;background:rgba(10,12,24,.82);opacity:0;pointer-events:none;transition:opacity .3s;text-align:center}
+#cue.show{opacity:1}
+#cue b{font-family:var(--hand);font-weight:400;font-size:44px;color:var(--moon)}
+#cue span{font-family:var(--round);font-size:16px;color:#d7d2c8}
+#cue.morning{background:linear-gradient(#f9d9a8,#f6b48e);}
+#cue.morning b{color:#5a2d1b}#cue.morning span{color:#7a4630}
+/* ミュート（ラジオの丸いつまみ風ではなくスマホの消音スイッチ） */
+#bMute{position:absolute;right:max(10px,env(safe-area-inset-right));top:max(6px,env(safe-area-inset-top));z-index:9;height:36px;min-width:64px;padding:0 10px;border-radius:18px;background:rgba(255,255,255,.08);font-size:12.5px;font-family:var(--round);color:#d7d2c8;display:flex;align-items:center;gap:6px}
+#bMute i{width:22px;height:12px;border-radius:6px;background:#3a4166;position:relative}
+#bMute i::after{content:"";position:absolute;top:1px;left:11px;width:10px;height:10px;border-radius:50%;background:#fff;transition:left .15s}
+#bMute.off i{background:var(--coral)}#bMute.off i::after{left:1px}
+#moonLeft{position:absolute;left:max(14px,env(safe-area-inset-left));top:max(10px,env(safe-area-inset-top));z-index:4;font-family:var(--hand);font-size:15px;color:var(--moon);display:flex;align-items:center;gap:6px;height:28px}
+#moonLeft svg{width:22px;height:22px}
+/* チュートリアル */
+#tut{position:absolute;left:0;right:0;bottom:calc(var(--bot) + 76px);z-index:10;display:flex;justify-content:center;pointer-events:none;padding:0 18px}
+#tut .tc{background:var(--paper);color:var(--paper-ink);padding:12px 16px;border-radius:14px;max-width:320px;text-align:center;box-shadow:0 10px 24px -8px rgba(0,0,0,.6);pointer-events:auto}
+#tut p{font-family:var(--round);font-weight:800;font-size:17px;line-height:1.45}
+#tut button{margin-top:10px;min-height:44px;padding:0 24px;border-radius:22px;background:var(--coral);color:#fff;font-size:16px;font-weight:800;font-family:var(--round)}
+#finger{position:absolute;width:46px;height:46px;z-index:11;pointer-events:none;transform:translate(-30%,-10%);animation:fing 1s ease-in-out infinite}
+@keyframes fing{50%{transform:translate(-30%,10%) scale(.92)}}
+
+/* 結果: 今夜の私の記録（スマホのスクショ） */
+#vResult{display:flex;flex-direction:column;align-items:center;padding:max(10px,env(safe-area-inset-top)) 12px max(8px,env(safe-area-inset-bottom))}
+#rWrap{position:relative;flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center}
+#rec{display:block;border-radius:18px;box-shadow:0 16px 36px -12px rgba(0,0,0,.7)}
+#rBtns{position:relative;display:flex;gap:8px;margin-top:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+#bAgain{min-width:136px;height:50px;padding:0 20px;border-radius:25px;background:var(--coral);color:#fff;font-family:var(--round);font-weight:800;font-size:17px;box-shadow:0 4px 0 var(--coral-dk)}
+#rBtns .s{min-height:42px;padding:0 14px;font-size:14px;font-family:var(--round);font-weight:500;color:#e8e3d8;background:rgba(255,255,255,.08);border-radius:10px}
+#loveLink{position:relative;margin-top:6px;font-size:12.5px;color:#aeb4cc;text-decoration:underline;text-underline-offset:3px;min-height:34px;display:inline-flex;align-items:center;padding:0 8px}
+#rMsg{position:absolute;left:50%;top:44%;transform:translateX(-50%);background:rgba(20,22,34,.92);color:#fff;padding:8px 14px;border-radius:8px;font-size:14px;pointer-events:none;z-index:3}
+@media (max-height:700px){
+  #hdr{height:52px}.tg{width:48px;height:48px}#tAvatar svg.av{width:36px;height:36px}
+  #bar{height:60px}#tInput{height:44px}
+  .msg{font-size:13.5px;padding:7px 11px}
+  #banner{top:88px;min-height:56px;padding:7px 10px}
+  .note{padding:14px 14px 10px}.note li{padding:6px 0}.note li svg{width:48px;height:48px}.note li{grid-template-columns:48px 1fr}
+  .tBox{margin-bottom:2svh}#bStart{height:54px}
+  #bAgain{height:46px}#rBtns .s{min-height:40px}
+}
+</style>
+</head>
+<body>
+<!-- 絵の部品 -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <filter id="cut" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="3" stdDeviation="2.5" flood-color="#000" flood-opacity=".45"/></filter>
+    <symbol id="i-heart" viewBox="0 0 100 90"><path d="M50 88C20 64 2 48 2 27 2 12 14 2 28 2c10 0 17 5 22 13C55 7 62 2 72 2c14 0 26 10 26 25 0 21-18 37-48 61z" fill="#ff4f6d" stroke="#fff" stroke-width="5"/></symbol>
+    <symbol id="i-call" viewBox="0 0 24 24"><path d="M6.6 2.5c.6-.3 1.3-.1 1.6.5l1.7 3.4c.3.6.1 1.2-.4 1.6l-1.5 1.1c1 2.2 2.8 4 5 5l1.1-1.5c.4-.5 1.1-.7 1.6-.4l3.4 1.7c.6.3.8 1 .5 1.6l-1 2.1c-.5 1-1.6 1.6-2.7 1.4C9.8 18.1 5.9 14.2 4.9 8.6c-.2-1.1.4-2.2 1.4-2.7z" fill="currentColor"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M10 3a7 7 0 1 1 0 14 7 7 0 0 1 0-14zm0 2.4a4.6 4.6 0 1 0 0 9.2 4.6 4.6 0 0 0 0-9.2z" fill="currentColor"/><rect x="14.6" y="15.4" width="3" height="7" rx="1.4" transform="rotate(-45 16 19)" fill="currentColor"/></symbol>
+    <symbol id="i-cam" viewBox="0 0 24 24"><path d="M8.5 4h7l1.4 2.2H20c1.1 0 2 .9 2 2V18c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V8.2c0-1.1.9-2 2-2h3.1z" fill="currentColor"/><circle cx="12" cy="13" r="4.2" fill="#1b2032"/><circle cx="12" cy="13" r="2.6" fill="currentColor"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M3 11.2 20.5 3.5c.6-.3 1.2.3.9.9L13.8 21c-.3.7-1.3.6-1.5-.1l-1.8-6.4-6.4-1.8c-.7-.2-.8-1.2-.1-1.5z" fill="currentColor"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15.5 3.5 7 12l8.5 8.5 1.8-1.8L10.6 12l6.7-6.7z" fill="currentColor"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M15 2.5a9.5 9.5 0 1 0 6.6 16.3A8 8 0 0 1 15 2.5z" fill="#f6e7c1"/></symbol>
+  </defs>
+</svg>
+
+<main id="vLoad" class="view">
+  <svg viewBox="0 0 150 110" aria-hidden="true">
+    <g id="ldWaves" fill="none" stroke="#f2795b" stroke-width="4"><path d="M18 38q-8 17 0 34"/><path d="M8 30q-12 25 0 50"/><path d="M132 38q8 17 0 34"/><path d="M142 30q12 25 0 50"/></g>
+    <g id="ldPhone"><rect x="40" y="18" width="70" height="74" rx="12" fill="#232842" stroke="#f6e7c1" stroke-width="3"/><circle cx="75" cy="40" r="7" fill="#3a4166"/><rect x="58" y="72" width="34" height="5" rx="2.5" fill="#3a4166"/></g>
+  </svg>
+  <div id="loadTxt">返信を待っています</div>
+  <div id="loadBar"><i></i></div>
+</main>
+
+<main id="vTitle" class="view paper" hidden>
+  <div class="room"><svg class="win" viewBox="0 0 400 300" aria-hidden="true">
+    <g filter="url(#cut)"><rect x="70" y="20" width="260" height="210" rx="6" fill="#0b1430" stroke="#fff8ea" stroke-width="4"/>
+    <circle cx="262" cy="86" r="30" fill="#f6e7c1"/><circle cx="276" cy="78" r="26" fill="#0b1430"/>
+    <g fill="#f6e7c1"><circle cx="130" cy="64" r="2.2"/><circle cx="170" cy="110" r="1.6"/><circle cx="214" cy="52" r="1.8"/><circle cx="110" cy="150" r="1.6"/><circle cx="300" cy="160" r="2"/></g>
+    <path d="M200 20v210M70 125h260" stroke="#fff8ea" stroke-width="5"/>
+    <path d="M60 14c18 50 6 120 22 230H40V14z" fill="#3c2f5c" stroke="#fff8ea" stroke-width="3"/><path d="M340 14c-18 50-6 120-22 230h42V14z" fill="#3c2f5c" stroke="#fff8ea" stroke-width="3"/></g>
+  </svg><div class="glow"></div></div>
+  <div class="tPhone"><svg viewBox="0 0 120 220" aria-hidden="true"><g filter="url(#cut)">
+    <rect x="3" y="3" width="114" height="214" rx="18" fill="#0b0c10" stroke="#fff8ea" stroke-width="3"/>
+    <rect x="10" y="12" width="100" height="196" rx="12" fill="#1b2032"/>
+    <rect x="18" y="120" width="56" height="20" rx="10" fill="#2b3150"/><rect x="46" y="150" width="56" height="24" rx="10" fill="#f2795b"/>
+    <text x="100" y="186" font-size="9" fill="#9aa1b8" text-anchor="end" font-family="sans-serif">既読 1:12</text>
+    <circle cx="28" cy="30" r="9" fill="#5a8f9a"/><rect x="42" y="25" width="36" height="9" rx="4" fill="#3a4166"/></g></svg></div>
+  <div class="tBox">
+    <h1><small>午前2時</small>既読無視の夜</h1>
+    <p>返事が来るまで、勝手に動く親指を止める。</p>
+  </div>
+  <button id="bStart">夜をはじめる</button>
+  <div class="tSmall"><button id="bHow">遊び方</button><button id="bMuteT">音 あり</button></div>
+  <div class="tFoot"><a href="privacy.html">プライバシー</a></div>
+</main>
+
+<main id="vHow" class="view paper" hidden>
+  <div class="room"></div>
+  <div class="note">
+    <h2>今夜のルール</h2>
+    <ol>
+      <li><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="22" fill="#5a8f9a"/><circle cx="30" cy="30" r="26" fill="none" stroke="#f2795b" stroke-width="4" stroke-dasharray="120 200"/><path d="M38 58c-2-10 0-18 4-24" stroke="#f0c3a0" stroke-width="10" stroke-linecap="butt" fill="none"/></svg>
+        <div><b>うずいた所をタップして止める</b><span>親指が勝手に向かう。輪が一周する前に。</span></div></li>
+      <li><svg viewBox="0 0 60 60" aria-hidden="true"><rect x="6" y="10" width="48" height="40" rx="8" fill="#2b3150"/><circle cx="20" cy="30" r="7" fill="#3a4166"/><rect x="31" y="26" width="17" height="8" rx="4" fill="#3a4166"/><text x="30" y="58" font-size="9" text-anchor="middle" fill="#c4533a" font-family="sans-serif">何もない所</text></svg>
+        <div><b>うずいてない所は押さない</b><span>押すと、自分で開いたことになる。</span></div></li>
+      <li><svg viewBox="0 0 60 60" aria-hidden="true"><rect x="4" y="12" width="52" height="16" rx="5" fill="#f4f0e8"/><rect x="7" y="15" width="10" height="10" rx="2" fill="#7fb36a"/><rect x="4" y="34" width="52" height="16" rx="5" fill="#f4f0e8"/><rect x="7" y="37" width="10" height="10" rx="2" fill="#e0b14a"/><path d="M48 34l6 16M54 34l-6 16" stroke="#c4533a" stroke-width="3"/></svg>
+        <div><b>友達と母の通知は開くと落ち着く</b><span>彼の名前が入った通知はワナ。開かない。</span></div></li>
+    </ol>
+  </div>
+  <div class="howBtns"><button id="bHowBack">もどる</button><button id="bHowGo">夜をはじめる</button></div>
+  <div class="credit">通知音 Gravity Sound（CC BY 4.0）／ そのほかの音は CC0・パブリックドメイン</div>
+</main>
+
+<main id="vPlay" class="view" hidden>
+  <div class="room"><div class="glow"></div></div>
+  <div id="moonLeft"><svg><use href="#i-moon"/></svg><span id="toMorning">朝まで 4時間</span></div>
+  <button id="bMute"><i></i><span>音</span></button>
+  <svg id="handsBack" aria-hidden="true"></svg>
+  <div id="phone">
+    <div id="screen">
+      <div id="sbar"><span id="clock">2:00</span><span class="r"><span id="batTxt">17%</span><span id="bat"><i></i></span></span></div>
+      <div id="hdr">
+        <svg class="back"><use href="#i-back"/></svg>
+        <button class="tg" id="tAvatar" data-t="avatar" aria-label="アイコン"><svg class="ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/></svg><svg class="av" viewBox="0 0 40 40" id="avHim"></svg></button>
+        <div class="who"><b id="himName">しょうた</b><small>最終ログイン 1:12</small></div>
+        <button class="tg" id="tSearch" data-t="search" aria-label="検索"><svg class="ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/></svg><svg><use href="#i-search"/></svg></button>
+        <button class="tg" id="tCall" data-t="call" aria-label="通話"><svg class="ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/></svg><svg><use href="#i-call"/></svg></button>
+      </div>
+      <div id="pvYear" hidden>2025年</div>
+      <div id="pvSearch" hidden><span id="pvSearchTxt"></span></div>
+      <div id="pvStory" hidden><i></i></div>
+      <div id="chat"></div>
+      <div id="bar">
+        <button class="tg" id="tCam" data-t="cam" aria-label="ストーリー"><svg class="ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/></svg><svg><use href="#i-cam"/></svg></button>
+        <button id="tInput" data-t="input" aria-label="入力欄"><span class="txt"><span class="ph">メッセージ</span></span><span class="bar"></span></button>
+        <span id="send"><svg><use href="#i-send"/></svg></span>
+      </div>
+      <div id="think"></div>
+      <div id="banner" role="button"><span class="ic"></span><span class="bt"><b></b><span></span></span><span class="ago">いま</span></div>
+      <div id="oops"></div>
+      <div id="cue"><b></b><span></span></div>
+    </div>
+  </div>
+  <svg id="thumbs" aria-hidden="true"></svg>
+  <div id="tut" hidden><div class="tc"><p></p><button hidden>わかった</button></div></div>
+  <svg id="finger" viewBox="0 0 46 46" hidden aria-hidden="true"><path d="M17 44c-3-6-9-11-11-16-1-3 2-5 5-3l5 4V6c0-3 5-3 5 0v13c0-3 5-3 5 0v2c0-3 5-3 5 0v2c0-3 5-3 5 0v9c0 5-2 9-4 12z" fill="#fbf6ea" stroke="#2a2622" stroke-width="2"/></svg>
+</main>
+
+<main id="vResult" class="view paper" hidden>
+  <div class="room"></div>
+  <div id="rWrap"><canvas id="rec" width="900" height="1300"></canvas><div id="rMsg" hidden></div></div>
+  <div id="rBtns"><button id="bAgain">もう一晩</button><button class="s" id="bX">Xでポスト</button><button class="s" id="bSave">画像を保存</button></div>
+  <a id="loveLink" href="love.html">本気でモヤモヤしてる人へ</a>
+</main>
+
+<script>
+window.__jsUp = true;
+(function(){
+  var opt={passive:false};
+  ['gesturestart','gesturechange','gestureend'].forEach(function(n){document.addEventListener(n,function(e){e.preventDefault()},opt)});
+  document.addEventListener('touchmove',function(e){if(e.touches&&e.touches.length>1)e.preventDefault()},opt);
+  var last=0;document.addEventListener('touchend',function(e){var n=Date.now();if(n-last<300&&!(e.target.closest&&e.target.closest('button,a')))e.preventDefault();last=n},opt);
+  document.addEventListener('dblclick',function(e){e.preventDefault()},opt);
+  window.addEventListener('wheel',function(e){if(e.ctrlKey)e.preventDefault()},opt);
+  window.addEventListener('keydown',function(e){if((e.ctrlKey||e.metaKey)&&['+','-','=','0',';'].indexOf(e.key)>=0)e.preventDefault()});
+})();
+(function(){
+  var errs=[];
+  window.addEventListener('error',function(e){errs.push((e.message||'error')+' @'+(e.filename||'')+':'+(e.lineno||''))});
+  window.addEventListener('unhandledrejection',function(e){errs.push('reject: '+(e.reason&&e.reason.message||e.reason))});
+  setTimeout(function(){
+    if(window.__jsUp && window.__knJs) return;
+    var d=document.createElement('div');d.id='boot-err';
+    d.textContent='起動できませんでした\n'+(errs.join('\n')||'(no error captured)')+'\n'+navigator.userAgent;
+    document.body.appendChild(d);
+  },6000);
+})();
+</script>
+<script src="tm.js?v=1" data-game="kidoku-night"></script>
+<script src="sfx.js?v=1"></script>
+<script src="data.js?v=1"></script>
+<script src="game.js?v=1"></script>
+<script src="support.js?v=1" data-ja="ホットミルク" data-en="a hot milk"></script>
+</body>
+</html>
