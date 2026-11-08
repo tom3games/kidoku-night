@@ -28,7 +28,7 @@
   }
   function appIcon(app) {
     if (app === 'ぽつり') return `<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#f2795b"/><path d="M9 12h22c2 0 3 1 3 3v10c0 2-1 3-3 3H18l-6 5v-5H9c-2 0-3-1-3-3V15c0-2 1-3 3-3z" fill="#fff"/></svg>`
-    if (app === 'ミセル') return `<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#e0b14a"/><rect x="9" y="9" width="22" height="22" rx="7" fill="none" stroke="#fff" stroke-width="3.5"/><circle cx="20" cy="20" r="5" fill="#fff"/></svg>`
+    if (app === 'ミセル') return `<svg viewBox="0 0 40 40"><rect width="40" height="40" fill="#e0b14a"/><path d="M6 20 Q20 8 34 20 Q20 32 6 20 Z" fill="#fff"/><circle cx="20" cy="20" r="5.5" fill="#e0b14a"/><circle cx="21.5" cy="18.5" r="1.6" fill="#fff"/></svg>`
     if (app === 'ゆるり会') return `<svg viewBox="0 0 40 40">${av('friend')}</svg>`
     if (app === '母') return `<svg viewBox="0 0 40 40">${av('mom')}</svg>`
     if (app === 'him') return `<svg viewBox="0 0 40 40">${av('him')}</svg>`
